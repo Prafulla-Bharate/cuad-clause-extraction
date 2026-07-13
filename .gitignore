@@ -1,13 +1,19 @@
 .env
+!.env.example
 __pycache__/
 *.pyc
 .venv/
 venv/
 data/full_contract_pdf/
 data/full_contract_txt/
+data/CUAD_v1/
 data/CUAD_v1.json
-outputs/*.csv
+# Keep the required submission artifacts visible in Git.
+!outputs/sample_output.csv
+!outputs/results.csv
+# Ignore other generated outputs by default.
 outputs/*.json
+outputs/*.csv
 !outputs/sample_output.csv
 !outputs/results.csv
 .DS_Store
