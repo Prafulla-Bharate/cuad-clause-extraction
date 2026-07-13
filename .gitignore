@@ -1,0 +1,13 @@
+.env
+__pycache__/
+*.pyc
+.venv/
+venv/
+data/full_contract_pdf/
+data/full_contract_txt/
+data/CUAD_v1.json
+outputs/*.csv
+outputs/*.json
+!outputs/sample_output.csv
+!outputs/results.csv
+.DS_Store
