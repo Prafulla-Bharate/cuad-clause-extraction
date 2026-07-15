@@ -7,7 +7,7 @@ This repository implements an end-to-end pipeline for the AI Intern take-home as
 - A reproducible Python pipeline for processing a 50-contract subset from CUAD
 - Clause extraction for three clause types: termination, confidentiality, liability
 - A contract summary of 100–150 words for each contract
-- An output CSV with the required shape: `contract_id`, `summary`, `termination_clause`, `confidentiality_clause`, `liability_clause`, plus `error` for debugging
+- An output CSV with the required shape: `contract_id`, `summary`, `termination_clause`, `confidentiality_clause`, `liability_clause`
 - A bonus semantic-search demo over extracted clauses
 
 ## Setup
@@ -83,7 +83,7 @@ Args:
 - `--model` — override the model name for the selected provider
 - `--reset_output` — delete the existing output file before a fresh run
 
-Expected output columns: `contract_id`, `summary`, `termination_clause`, `confidentiality_clause`, `liability_clause`, and `error`.
+Expected output columns: `contract_id`, `summary`, `termination_clause`, `confidentiality_clause`, `liability_clause`.
 An example of the expected row structure is in `outputs/sample_output.csv`.
 
 ### Bonus: semantic search over extracted clauses
@@ -198,5 +198,5 @@ flowchart TD
 │   ├── embeddings.py        # bonus: semantic search index
 │   └── pipeline.py          # orchestration
 └── outputs/
-    └── sample_output.csv    # example of expected output format
+    └── results.csv          # final pipeline output
 ```

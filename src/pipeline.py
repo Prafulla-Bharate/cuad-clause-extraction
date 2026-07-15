@@ -190,6 +190,15 @@ def _save_results(results: list[dict], output_path: str):
     else:
         # Write the CSV atomically, retrying briefly if the file is locked (Windows handles).
         csv_df = pd.DataFrame(results)
+        csv_df = csv_df.reindex(
+            columns=[
+                "contract_id",
+                "summary",
+                "termination_clause",
+                "confidentiality_clause",
+                "liability_clause",
+            ]
+        ).fillna("")
         temp_path = output_path.with_suffix(output_path.suffix + ".tmp")
         max_attempts = 6
         for attempt in range(1, max_attempts + 1):
