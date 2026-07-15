@@ -77,28 +77,14 @@ python main.py --pdf_dir data/full_contract_pdf --n_contracts 50 --output output
 
 Args:
 - `--pdf_dir` — path to the folder of contract PDFs (required)
-- `--n_contracts` — how many contracts to sample (default 50)
+- `--n_contracts` — how many unique contracts to process (default 50)
 - `--output` — `.csv` or `.json` (default `outputs/results.csv`)
 - `--seed` — random seed for reproducible sampling (default 42)
 - `--model` — override the model name for the selected provider
-- `--batch_start` — start index inside the sampled subset for chunked runs
-- `--batch_size` — number of sampled contracts to process in the current run
 - `--reset_output` — delete the existing output file before a fresh run
 
 Expected output columns: `contract_id`, `summary`, `termination_clause`, `confidentiality_clause`, `liability_clause`, and `error`.
 An example of the expected row structure is in `outputs/sample_output.csv`.
-
-### Batch / resume usage
-
-If you want to process the 50-contract sample in smaller chunks, use the batch flags:
-
-```bash
-python main.py --pdf_dir data/full_contract_pdf --n_contracts 50 --output outputs/results.csv --batch_start 0 --batch_size 15
-python main.py --pdf_dir data/full_contract_pdf --n_contracts 50 --output outputs/results.csv --batch_start 15 --batch_size 15
-python main.py --pdf_dir data/full_contract_pdf --n_contracts 50 --output outputs/results.csv --batch_start 30 --batch_size 20
-```
-
-This avoids reprocessing completed rows from the output CSV while still allowing you to continue later.
 
 ### Bonus: semantic search over extracted clauses
 

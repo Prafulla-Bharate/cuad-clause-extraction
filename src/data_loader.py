@@ -19,29 +19,24 @@ def sample_contracts(
     pdf_dir: str,
     n: int = 50,
     seed: int = 42,
-    start: int = 0,
-    batch_size: int | None = None,
 ) -> list[Path]:
    
     all_pdfs = list_contract_pdfs(pdf_dir)
     if len(all_pdfs) == 0:
         raise ValueError(f"No PDFs found in {pdf_dir}")
 
-    if len(all_pdfs) <= n:
-        sampled = all_pdfs
-    else:
-        rng = random.Random(seed)
-        sampled = rng.sample(all_pdfs, n)
+    unique_paths = []
+    seen_stems = set()
+    for path in all_pdfs:
+        if path.stem not in seen_stems:
+            seen_stems.add(path.stem)
+            unique_paths.append(path)
 
-    if start < 0:
-        raise ValueError("start must be >= 0")
-    if batch_size is None:
-        batch_size = len(sampled) - start
-    if batch_size < 0:
-        raise ValueError("batch_size must be >= 0")
+    if len(unique_paths) <= n:
+        return unique_paths
 
-    end = min(start + batch_size, len(sampled))
-    return sampled[start:end]
+    rng = random.Random(seed)
+    return rng.sample(unique_paths, n)
 
 
 def extract_text_from_pdf(path: Path) -> str:

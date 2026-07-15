@@ -25,6 +25,30 @@ except ImportError:
     google_types = None
 
 
+class LLMError(RuntimeError):
+    pass
+
+
+class RateLimitError(LLMError):
+    pass
+
+
+def _is_rate_limit_error(error: Exception) -> bool:
+    text = str(error).lower()
+    return any(
+        keyword in text
+        for keyword in (
+            "rate limit",
+            "rate_limit",
+            "quota",
+            "429",
+            "too many requests",
+            "quota exceeded",
+            "quota has been exceeded",
+        )
+    )
+
+
 class GeminiClient:
     def __init__(self, model: str | None = None, max_retries: int = 3):
         self.provider = _PROVIDER
@@ -82,6 +106,8 @@ class GeminiClient:
                 last_err = e
                 wait = 2 ** attempt
                 time.sleep(wait)
+        if _is_rate_limit_error(last_err):
+            raise RateLimitError(f"LLM call failed after {self.max_retries} attempts: {last_err}")
         raise RuntimeError(f"LLM call failed after {self.max_retries} attempts: {last_err}")
 
     def generate_json(self, prompt: str, temperature: float = 0.1) -> dict:

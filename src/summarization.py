@@ -6,7 +6,7 @@ covering:
 - Key obligations of each party
 - Notable risks or penalties (e.g. liability caps, termination penalties)
 
-Write it as plain prose (no bullet points, no headers). Stay strictly within 100-150 words.
+Write it as plain prose (no bullet points, no headers). Stay strictly within 100-150 words. Do not invent terms, parties, or facts that are not present in the contract text. Use only material from the excerpt.
 
 Contract:
 \"\"\"
@@ -16,11 +16,11 @@ Contract:
 Summary:"""
 
 
-MAX_CHARS_FOR_SUMMARY = 8000
+MAX_CHARS_FOR_SUMMARY = 12000
 
 
 def summarize_contract(client, contract_text: str) -> str:
     truncated = contract_text[:MAX_CHARS_FOR_SUMMARY]
     prompt = _SUMMARY_PROMPT.format(text=truncated)
-    summary = client.generate(prompt, temperature=0.2)
+    summary = client.generate(prompt, temperature=0.0)
     return summary.strip()
